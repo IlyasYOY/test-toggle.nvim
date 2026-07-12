@@ -1,0 +1,98 @@
+*test-toggle.txt*                 Source/test file toggling for Neovim
+
+==============================================================================
+CONTENTS                                                     *test-toggle*
+
+1. Requirements                         |test-toggle-requirements|
+2. Setup                                |test-toggle-setup|
+3. Rules                                |test-toggle-rules|
+4. Lua API                              |test-toggle-api|
+5. Built-in presets                     |test-toggle-presets|
+
+==============================================================================
+1. Requirements                         *test-toggle-requirements*
+
+Neovim 0.11 or newer is required. There are no third-party runtime
+dependencies.
+
+==============================================================================
+2. Setup                                *test-toggle-setup*
+
+Configure filetypes once. setup() creates the FileType autocmd and attaches
+already loaded matching buffers: >lua
+
+    require("test-toggle").setup {
+        keymap = "<localleader>ot",
+        filetypes = {
+            go = { preset = "go", command = "GoToggleTest" },
+            typescriptreact = {
+                preset = "tsx",
+                command = "TSXToggleTest",
+            },
+        },
+    }
+<
+Commands and mappings are buffer-local. Common `command` and `keymap` values
+are inherited by filetype entries and can be overridden there. `command`
+defaults to `TestToggle`; `keymap` defaults to false.
+
+Calling setup() without options enables the seven built-in filetype mappings.
+Supplying `filetypes` replaces that default map. Repeated setup calls replace
+the plugin's previous autocmds, commands, and mappings.
+
+==============================================================================
+3. Rules                                *test-toggle-rules*
+
+Rules are tried in order. Each has a Lua pattern in `detect` and exactly one
+of `template` or `transform`: >lua
+
+    {
+        detect = "([^/]+)_test%.go$",
+        template = "%1.go",
+    }
+
+    {
+        detect = "/src/main/java/",
+        transform = function(path)
+            return path:gsub("/src/main/java/", "/src/test/java/", 1)
+        end,
+    }
+<
+A template is passed to `string.gsub(path, detect, template, 1)`. A callback
+receives a normalized absolute path and must return a non-empty path.
+
+==============================================================================
+4. Lua API                              *test-toggle-api*
+
+register({name}, {rules})                         *test-toggle.register()*
+        Validate and register or replace a named preset.
+
+setup({opts})                                       *test-toggle.setup()*
+        Configure common command/keymap defaults and a filetypes map, then
+        automatically attach matching new and already loaded buffers.
+
+attach({bufnr})                                     *test-toggle.attach()*
+        Attach the setup configuration selected by the buffer's filetype.
+        Normally setup() invokes this automatically.
+
+resolve({path}, {preset-or-rules})                 *test-toggle.resolve()*
+        Return an absolute target path, or nil plus an error.
+
+toggle({opts})                                     *test-toggle.toggle()*
+        Resolve and edit the counterpart of opts.bufnr. An absent target is
+        opened as a new buffer. Unnamed and unmatched buffers return errors.
+
+==============================================================================
+5. Built-in presets                     *test-toggle-presets*
+
+    go          name.go <> name_test.go
+    java        src/main/java/Name.java <> src/test/java/NameTest.java
+    python      name.py <> test_name.py
+    javascript  name.js <> name.test.js
+    typescript  name.ts <> name.test.ts
+    tsx         name.tsx <> name.test.tsx
+    lua         name.lua <> name_spec.lua
+
+Java intentionally excludes Kotlin and integration-test source sets.
+
+vim:tw=78:ts=8:noet:ft=help:norl:

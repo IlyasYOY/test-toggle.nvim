@@ -8,6 +8,8 @@ CONTENTS                                                     *test-toggle*
 3. Rules                                |test-toggle-rules|
 4. Lua API                              |test-toggle-api|
 5. Built-in presets                     |test-toggle-presets|
+6. Health                               |test-toggle-health|
+7. Development                          |test-toggle-development|
 
 ==============================================================================
 1. Requirements                         *test-toggle-requirements*
@@ -94,5 +96,28 @@ toggle({opts})                                     *test-toggle.toggle()*
     lua         name.lua <> name_spec.lua
 
 Java intentionally excludes Kotlin and integration-test source sets.
+
+==============================================================================
+6. HEALTH                               *test-toggle-health*
+
+Run:
+
+    :checkhealth test-toggle
+
+The provider checks the supported Neovim version, module loading, path
+normalization, buffer-local user commands, and dependency-free operation.
+
+==============================================================================
+7. DEVELOPMENT                          *test-toggle-development*
+
+`make check` runs the canonical non-mutating lint, isolated tests, and tracked
+help validation. Stable compatibility commands are:
+
+    make test NVIM_VERSION=v0.11.7
+    make test NVIM_VERSION=v0.12.4
+
+Nightly is an additional non-blocking compatibility probe:
+
+    make test NVIM_VERSION=nightly
 
 vim:tw=78:ts=8:noet:ft=help:norl:

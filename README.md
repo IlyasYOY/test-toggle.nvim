@@ -10,15 +10,21 @@ buffer-local command, and an opt-in buffer-local mapping.
 
 No third-party plugins are required at runtime.
 
+Run `:checkhealth test-toggle` to verify the Neovim version and APIs used for
+path normalization and buffer-local command attachment.
+
 ## Installation
 
-With Neovim's built-in package manager:
+With Neovim 0.12 or newer, use the built-in `vim.pack`:
 
 ```lua
 vim.pack.add {
     "https://github.com/IlyasYOY/test-toggle.nvim",
 }
 ```
+
+Neovim 0.11 users should install the plugin with lazy.nvim or another package
+manager.
 
 With lazy.nvim:
 
@@ -130,11 +136,15 @@ not depend on the current working directory. An absent counterpart is opened
 as a new buffer. Unnamed and unmatched buffers return an error; commands and
 mappings display that error as a warning.
 
+See `:help test-toggle` for the complete setup, rule, preset, and API reference.
+
 ## Development
 
 ```sh
 make check
 make test NVIM_VERSION=v0.11.7
+make test NVIM_VERSION=v0.12.4
+make test NVIM_VERSION=nightly
 ```
 
 `make check` runs formatting checks, Luacheck, headless Neovim tests, and help

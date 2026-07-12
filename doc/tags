@@ -1,0 +1,14 @@
+test-toggle	test-toggle.txt	/*test-toggle*
+test-toggle-api	test-toggle.txt	/*test-toggle-api*
+test-toggle-development	test-toggle.txt	/*test-toggle-development*
+test-toggle-health	test-toggle.txt	/*test-toggle-health*
+test-toggle-presets	test-toggle.txt	/*test-toggle-presets*
+test-toggle-requirements	test-toggle.txt	/*test-toggle-requirements*
+test-toggle-rules	test-toggle.txt	/*test-toggle-rules*
+test-toggle-setup	test-toggle.txt	/*test-toggle-setup*
+test-toggle.attach()	test-toggle.txt	/*test-toggle.attach()*
+test-toggle.register()	test-toggle.txt	/*test-toggle.register()*
+test-toggle.resolve()	test-toggle.txt	/*test-toggle.resolve()*
+test-toggle.setup()	test-toggle.txt	/*test-toggle.setup()*
+test-toggle.toggle()	test-toggle.txt	/*test-toggle.toggle()*
+test-toggle.txt	test-toggle.txt	/*test-toggle.txt*

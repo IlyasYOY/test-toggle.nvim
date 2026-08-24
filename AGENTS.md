@@ -28,7 +28,7 @@
 - `make test` runs the isolated module and attachment suites.
 - Before compatibility work is complete, run:
   - `make test NVIM_VERSION=v0.11.7`
-  - `make test NVIM_VERSION=v0.12.4`
+  - `make test NVIM_VERSION=v0.12.5`
   - `make test NVIM_VERSION=nightly` as a compatibility probe
 - A selected spec can be passed through
   `require("tests.runner").run({ files = { ... }, verbose = true })`.
